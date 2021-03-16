@@ -1,5 +1,5 @@
-#![allow(clippy::many_single_char_names)]
-use core::convert::TryInto;
+#![allow(clippy::many_single_char_names, dead_code)]
+// use core::convert::TryInto;
 
 /// Round constants
 #[cfg(not(feature = "asm"))]
@@ -61,16 +61,13 @@ fn op_i(w: u32, x: u32, y: u32, z: u32, m: u32, c: u32, s: u32) -> u32 {
 }
 
 #[inline]
-pub fn compress(state: &mut [u32; 4], input: &[u8; 64]) {
+pub fn compress(state: &mut [u32; 4], input: &[u32; 16]) {
     let mut a = state[0];
     let mut b = state[1];
     let mut c = state[2];
     let mut d = state[3];
 
-    let mut data = [0u32; 16];
-    for (o, chunk) in data.iter_mut().zip(input.chunks_exact(4)) {
-        *o = u32::from_le_bytes(chunk.try_into().unwrap());
-    }
+    let data = *input;
 
     // round 1
     a = op_f(a, b, c, d, data[0], RC[0], 7);

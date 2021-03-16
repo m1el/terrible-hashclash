@@ -12,6 +12,7 @@ impl Xoroshiro128Plus {
     /// This is the jump function for the generator. It is equivalent to 2^64 calls
     /// to next_64(); it can be used to generate 2^64 non-overlapping subsequences for
     /// parallel computations.
+    #[allow(dead_code)]
     pub fn jump(&mut self) {
         const JUMP: [u64; 2] = [ 0xbeac0467eba5facb, 0xd86b048b86aa9922 ];
 
